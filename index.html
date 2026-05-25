@@ -1,344 +1,1567 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>회원 전용 트레이닝 플랜</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        body {
-            background: #0f1115;
-            color: white;
-            overflow-x: hidden;
-        }
-        /* 로그인 화면 */
-        #loginScreen {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(135deg, #0f1115, #1a1d24);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            padding: 20px;
-        }
-        .login-box {
-            width: 100%;
-            max-width: 420px;
-            background: #1b1f27;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 40px 30px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-        }
-        .login-box h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        .login-box p {
-            opacity: 0.7;
-            margin-bottom: 25px;
-        }
-        .login-box input {
-            width: 100%;
-            height: 56px;
-            border: none;
-            border-radius: 14px;
-            padding: 0 16px;
-            font-size: 1rem;
-            background: #2a2f39;
-            color: white;
-            margin-bottom: 15px;
-        }
-        .login-box button {
-            width: 100%;
-            height: 56px;
-            border: none;
-            border-radius: 14px;
-            background: white;
-            color: black;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .login-box button:hover {
-            transform: translateY(-2px);
-        }
-        #error {
-            margin-top: 12px;
-            color: #ff6b6b;
-            font-size: 0.95rem;
-        }
-        /* 메인 */
-        .hero {
-            min-height: 100svh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 80px 20px;
-            background: radial-gradient(circle at top, #2d3444 0%, #0f1115 60%);
-        }
-        .hero-inner {
-            width: 100%;
-            max-width: 1000px;
-        }
-        .badge {
-            display: inline-block;
-            padding: 10px 18px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 999px;
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-        }
-        .hero h1 {
-            font-size: 5rem;
-            line-height: 1;
-            margin-bottom: 25px;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.8;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px 100px;
-        }
-        .section {
-            margin-bottom: 80px;
-        }
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 25px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .card {
-            background: #1b1f27;
-            border-radius: 22px;
-            padding: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .card h3 {
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-        .card p {
-            opacity: 0.8;
-            line-height: 1.7;
-        }
-        .table-wrap {
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        .table {
-            width: 100%;
-            min-width: 700px;
-            border-collapse: collapse;
-            background: #1b1f27;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-        .table th {
-            background: #242936;
-            padding: 16px;
-            text-align: left;
-        }
-        .table td {
-            padding: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .footer {
-            text-align: center;
-            padding: 40px 20px;
-            opacity: 0.5;
-        }
-        /* 모바일 */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
-            }
-            .hero p {
-                font-size: 1rem;
-            }
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            .section-title {
-                font-size: 1.5rem;
-            }
-            .card {
-                padding: 20px;
-            }
-            .table {
-                min-width: 600px;
-            }
-            .login-box {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>맞춤 트레이닝 플랜 — A & B</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --a-primary: #FF4D4D;
+    --a-accent: #FF8C42;
+    --a-bg: #1A0A0A;
+    --a-surface: #2A1010;
+    --a-text: #FFE5D9;
+    --b-primary: #3D9BE9;
+    --b-accent: #2EFBCA;
+    --b-bg: #060D1A;
+    --b-surface: #0D1E30;
+    --b-text: #D0EFFF;
+    --neutral: #1C1C1C;
+    --white: #F5F5F0;
+    --gray: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #0E0E0E;
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    background: #0E0E0E;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 20% 50%, rgba(255,77,77,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(61,155,233,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    color: var(--gray);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-title .a-color { color: var(--a-primary); }
+  .hero-title .b-color { color: var(--b-primary); }
+  .hero-title .amp { color: #444; margin: 0 0.15em; }
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: var(--gray);
+    letter-spacing: 0.05em;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+  .hero-badges {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+  .badge {
+    padding: 0.5rem 1.4rem;
+    border-radius: 2px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .badge-a { background: var(--a-primary); color: #fff; }
+  .badge-b { background: var(--b-primary); color: #fff; }
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: #444;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    animation: bounce 2s infinite;
+  }
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, #444, transparent);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50%      { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ─── TAB NAV ─── */
+  .tab-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    background: rgba(14,14,14,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #222;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 1.1rem;
+    border: none;
+    cursor: pointer;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.1em;
+    transition: all 0.3s;
+    background: transparent;
+    color: #555;
+    position: relative;
+  }
+  .tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: currentColor;
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .tab-btn.active-a { color: var(--a-primary); }
+  .tab-btn.active-b { color: var(--b-primary); }
+  .tab-btn.active-a::after, .tab-btn.active-b::after { transform: scaleX(1); }
+
+  /* ─── PANELS ─── */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Panel A */
+  .panel-a { background: var(--a-bg); }
+  .panel-b { background: var(--b-bg); }
+
+  /* ─── SECTION ─── */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+  }
+  .section-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+    font-weight: 500;
+  }
+  .panel-a .section-tag { color: var(--a-accent); }
+  .panel-b .section-tag { color: var(--b-accent); }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 2.5rem;
+  }
+  .panel-a .section-title { color: var(--a-text); }
+  .panel-b .section-title { color: var(--b-text); }
+
+  /* ─── STATS GRID ─── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1px;
+    background: #333;
+    border: 1px solid #333;
+    margin-bottom: 3rem;
+  }
+  .stat-card {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .panel-a .stat-card { background: var(--a-surface); }
+  .panel-b .stat-card { background: var(--b-surface); }
+
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .stat-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    line-height: 1;
+  }
+  .panel-a .stat-value { color: var(--a-primary); }
+  .panel-b .stat-value { color: var(--b-primary); }
+
+  .stat-unit {
+    font-size: 0.75rem;
+    color: var(--gray);
+  }
+
+  /* ─── ALERT BOX ─── */
+  .alert-box {
+    border-left: 3px solid;
+    padding: 1rem 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    border-radius: 0 4px 4px 0;
+  }
+  .panel-a .alert-box {
+    border-color: var(--a-accent);
+    background: rgba(255,140,66,0.08);
+    color: var(--a-text);
+  }
+  .panel-b .alert-box {
+    border-color: var(--b-accent);
+    background: rgba(46,251,202,0.06);
+    color: var(--b-text);
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    height: 1px;
+    background: #222;
+    margin: 3rem 0;
+  }
+
+  /* ─── WEEK SCHEDULE ─── */
+  .week-schedule {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+  @media (max-width: 768px) {
+    .week-schedule { grid-template-columns: 1fr; }
+  }
+  .day-card {
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .day-card:hover { transform: translateY(-3px); }
+
+  .day-header {
+    padding: 0.6rem 0.8rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .panel-a .day-header { background: var(--a-primary); color: #fff; }
+  .panel-b .day-header { background: var(--b-primary); color: #fff; }
+  .day-header.rest-day {
+    background: #2a2a2a !important;
+    color: #666 !important;
+  }
+  .day-body {
+    padding: 0.8rem;
+    font-size: 0.78rem;
+    line-height: 1.8;
+  }
+  .panel-a .day-body { background: var(--a-surface); color: var(--a-text); }
+  .panel-b .day-body { background: var(--b-surface); color: var(--b-text); }
+
+  .day-badge {
+    font-size: 0.55rem;
+    padding: 0.15rem 0.4rem;
+    background: rgba(255,255,255,0.2);
+    border-radius: 2px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .exercise-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    padding: 0.2rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .exercise-item:last-child { border-bottom: none; }
+  .ex-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    margin-top: 0.55rem;
+    flex-shrink: 0;
+  }
+  .panel-a .ex-dot { background: var(--a-accent); }
+  .panel-b .ex-dot { background: var(--b-accent); }
+
+  /* ─── EXERCISE TABLE ─── */
+  .ex-table-wrap { overflow-x: auto; margin-bottom: 2rem; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+  th {
+    text-align: left;
+    padding: 0.7rem 1rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray);
+    border-bottom: 1px solid #333;
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #1a1a1a;
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .panel-a td { color: var(--a-text); }
+  .panel-b td { color: var(--b-text); }
+
+  td.highlight-a { color: var(--a-primary); font-weight: 700; }
+  td.highlight-b { color: var(--b-primary); font-weight: 700; }
+  td.accent-a { color: var(--a-accent); }
+  td.accent-b { color: var(--b-accent); }
+
+  /* ─── MEAL GRID ─── */
+  .meal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .meal-card {
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .meal-header {
+    padding: 0.8rem 1.2rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .panel-a .meal-header { background: var(--a-primary); color: #fff; }
+  .panel-b .meal-header { background: var(--b-primary); color: #fff; }
+
+  .meal-kcal {
+    font-size: 0.75rem;
+    background: rgba(0,0,0,0.2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+  }
+  .meal-body {
+    padding: 1rem 1.2rem;
+  }
+  .panel-a .meal-body { background: var(--a-surface); }
+  .panel-b .meal-body { background: var(--b-surface); }
+
+  .meal-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.35rem 0;
+    font-size: 0.82rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .meal-item:last-child { border-bottom: none; }
+  .meal-item-name { color: var(--gray); }
+  .meal-item-val { font-weight: 500; }
+  .panel-a .meal-item-val { color: var(--a-text); }
+  .panel-b .meal-item-val { color: var(--b-text); }
+
+  .macro-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.72rem;
+    flex-wrap: wrap;
+  }
+  .macro-chip {
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    font-weight: 700;
+  }
+  .chip-carb { background: rgba(255,220,100,0.15); color: #FFD700; }
+  .chip-prot { background: rgba(100,200,255,0.15); color: #64C8FF; }
+  .chip-fat  { background: rgba(255,150,100,0.15); color: #FF9664; }
+
+  /* ─── SUPPLEMENT ─── */
+  .supp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .supp-item {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+    border-radius: 4px;
+  }
+  .panel-a .supp-item { background: var(--a-surface); }
+  .panel-b .supp-item { background: var(--b-surface); }
+
+  .supp-rank {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+  }
+  .panel-a .supp-rank { color: var(--a-primary); }
+  .panel-b .supp-rank { color: var(--b-primary); }
+
+  .supp-name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.2rem;
+  }
+  .supp-desc {
+    font-size: 0.78rem;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+  .supp-dose {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.3rem 0.7rem;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .panel-a .supp-dose { background: rgba(255,77,77,0.15); color: var(--a-primary); }
+  .panel-b .supp-dose { background: rgba(61,155,233,0.15); color: var(--b-primary); }
+
+  /* ─── MONTHLY PLAN ─── */
+  .monthly-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: #222;
+    border: 1px solid #222;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 600px) {
+    .monthly-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .month-card {
+    padding: 1.5rem 1.2rem;
+  }
+  .panel-a .month-card { background: var(--a-surface); }
+  .panel-b .month-card { background: var(--b-surface); }
+
+  .month-week {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+  .panel-a .month-week { color: var(--a-primary); }
+  .panel-b .month-week { color: var(--b-primary); }
+
+  .month-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .month-row:last-child { border-bottom: none; }
+  .month-key { color: var(--gray); }
+  .month-val { font-weight: 700; }
+  .panel-a .month-val { color: var(--a-text); }
+  .panel-b .month-val { color: var(--b-text); }
+
+  /* ─── PLATEAU ─── */
+  .plateau-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+  .plateau-card {
+    padding: 1.2rem 1.4rem;
+    border-radius: 4px;
+    border-left: 3px solid;
+  }
+  .panel-a .plateau-card { background: var(--a-surface); border-color: var(--a-accent); }
+  .panel-b .plateau-card { background: var(--b-surface); border-color: var(--b-accent); }
+
+  .plateau-q {
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  .panel-a .plateau-q { color: var(--a-accent); }
+  .panel-b .plateau-q { color: var(--b-accent); }
+
+  .plateau-a {
+    font-size: 0.8rem;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #070707;
+    color: #333;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+  footer span { color: #555; }
+
+  /* ─── COMPARE TOGGLE ─── */
+  .compare-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    background: #111;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .compare-person {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .compare-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+  }
+  .compare-name.ca { color: var(--a-primary); }
+  .compare-name.cb { color: var(--b-primary); }
+  .compare-info { font-size: 0.72rem; color: var(--gray); letter-spacing: 0.1em; }
+  .compare-vs {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: #333;
+  }
+
+  /* ─── PRINCIPLE BOX ─── */
+  .principle-box {
+    padding: 1.5rem 1.8rem;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .panel-a .principle-box { background: var(--a-surface); }
+  .panel-b .principle-box { background: var(--b-surface); }
+
+  .principle-num {
+    position: absolute;
+    top: -0.5rem; right: 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    opacity: 0.06;
+    line-height: 1;
+  }
+  .panel-a .principle-num { color: var(--a-primary); }
+  .panel-b .principle-num { color: var(--b-primary); }
+
+  .principle-title {
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.4rem;
+  }
+  .panel-a .principle-title { color: var(--a-text); }
+  .panel-b .principle-title { color: var(--b-text); }
+
+  .principle-body {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: #111; }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+ @media (max-width:768px){
+
+  .hero{
+      min-height:100svh;
+      height:auto;
+  }
+
+  .hero-title{
+      font-size:4rem;
+  }
+
+  .monthly-grid,
+  .plateau-grid,
+  .meal-grid{
+      grid-template-columns:1fr;
+  }
+
+  .tab-nav{
+      flex-direction:column;
+  }
+
+  .tab-btn{
+      width:100%;
+  }
+
+  .ex-table-wrap{
+      overflow-x:auto;
+  }
+
+  table{
+      min-width:700px;
+  }
+}
+
+
+
+</style>
 </head>
 <body>
 
-<div id="loginScreen">
-    <div class="login-box">
-        <h1>회원 전용 페이지</h1>
-        <p>비밀번호를 입력해주세요</p>
-        <input type="password" id="passwordInput" placeholder="비밀번호 입력">
-        <button onclick="login()">입장하기</button>
-        <div id="error"></div>  
-    </div>
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-label">맞춤형 트레이닝 플랜 · 초급자 버전</div>
+  <h1 class="hero-title">
+    <span class="a-color">A</span>
+    <span class="amp">&</span>
+    <span class="b-color">B</span>
+  </h1>
+  <p class="hero-sub">감량+근육 증가 vs 클린 벌크업 · PPL 분할 · 주 5회</p>
+  <div class="hero-badges">
+    <span class="badge badge-a">A — 178cm / 90kg / 감량</span>
+    <span class="badge badge-b">B — 168cm / 58kg / 벌크</span>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- ─── COMPARE BAR ─── -->
+<div class="compare-bar">
+  <div class="compare-person">
+    <div class="compare-name ca">A</div>
+    <div class="compare-info">178cm · 90kg · BMI 28.4</div>
+    <div class="compare-info">목표: 체지방 감량 + 근육 증가</div>
+  </div>
+  <div class="compare-vs">VS</div>
+  <div class="compare-person">
+    <div class="compare-name cb">B</div>
+    <div class="compare-info">168cm · 58kg · BMI 20.5</div>
+    <div class="compare-info">목표: 클린 벌크업</div>
+  </div>
 </div>
 
-<div id="content" style="display:none;">
-    <section class="hero">
-        <div class="hero-inner">
-            <div class="badge">MEMBER ONLY</div>
-            <h1>TRAINING<br>SYSTEM</h1>     
-            <p>회원 맞춤형 운동 플랜, 식단, 수행 능력 분석 및 루틴 관리 페이지</p>
+<!-- ─── TAB NAV ─── -->
+<nav class="tab-nav">
+  <button class="tab-btn active-a" onclick="showPanel('a')">🔴 A의 플랜 — 감량+근육</button>
+  <button class="tab-btn" onclick="showPanel('b')">🔵 B의 플랜 — 클린 벌크</button>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PANEL A
+══════════════════════════════════════════ -->
+<div id="panel-a" class="panel panel-a active">
+
+  <!-- 신체 분석 -->
+  <div class="section">
+    <div class="section-tag">01 · 신체 분석</div>
+    <h2 class="section-title">A의 현재 상태</h2>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">BMI</div>
+        <div class="stat-value">28.4</div>
+        <div class="stat-unit">과체중 구간</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">예상 체지방률</div>
+        <div class="stat-value">25%</div>
+        <div class="stat-unit">약 22.5kg 체지방</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">제지방 체중 LBM</div>
+        <div class="stat-value">67kg</div>
+        <div class="stat-unit">근육+골격+수분</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">FFMI</div>
+        <div class="stat-value">21.3</div>
+        <div class="stat-unit">자연 한계 25 대비 여유</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">TDEE (유지 칼로리)</div>
+        <div class="stat-value">2,890</div>
+        <div class="stat-unit">kcal / 일</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">목표 칼로리 (운동일)</div>
+        <div class="stat-value">2,650</div>
+        <div class="stat-unit">kcal / -240 적자</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">단백질 목표</div>
+        <div class="stat-value">190g</div>
+        <div class="stat-unit">LBM × 2.8g</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">1개월 목표 체중</div>
+        <div class="stat-value">87kg</div>
+        <div class="stat-unit">체지방 -2kg / 근육 +0.5kg</div>
+      </div>
+    </div>
+
+    <div class="alert-box">
+      ⚠️ <strong>초급자 핵심 원칙</strong> — 처음 4~6주는 신경 적응기입니다. 중량 증가보다 <strong>정확한 폼 습득</strong>이 최우선입니다.
+      잘못된 폼으로 고중량을 다루면 부상 위험이 급격히 올라갑니다. RPE는 절대 처음부터 8을 넘기지 마세요.
+      아침 3km 구보는 저강도 유산소로 지방 산화를 촉진하며, 근손실 방지를 위해 구보 직후 바나나 1개 + 단백질 20g 섭취를 권장합니다.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 주간 스케줄 -->
+  <div class="section">
+    <div class="section-tag">02 · 주간 운동 루틴</div>
+    <h2 class="section-title">요일별 전략 (초급자 PPL)</h2>
+
+    <div class="week-schedule">
+      <!-- 월 -->
+      <div class="day-card">
+        <div class="day-header">
+          <span>월</span><span class="day-badge">PUSH A</span>
         </div>
-    </section>
-
-    <div class="container">
-        <section class="section">
-            <h2 class="section-title">회원 정보</h2>
-            <div class="grid">
-                <div class="card">             
-                    <h3>현재 체중</h3>
-                    <p>84kg</p>
-                </div>
-                <div class="card">
-                    <h3>목표 체중</h3>
-                    <p>78kg</p>
-                </div>          
-                <div class="card">
-                    <h3>운동 빈도</h3>
-                    <p>주 5~6회</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">주간 루틴</h2>    
-            <div class="table-wrap">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>요일</th>                      
-                            <th>운동</th>
-                            <th>강도</th>
-                            <th>비고</th>
-                        </tr>
-                    </thead>              
-                    <tbody>
-                        <tr>
-                            <td>월요일</td>
-                            <td>하체</td>
-                            <td>높음</td>      
-                            <td>스쿼트 중심</td>
-                        </tr>
-                        <tr>
-                            <td>화요일</td>                 
-                            <td>가슴</td>
-                            <td>중간</td>
-                            <td>벤치프레스</td>
-                        </tr>
-                        <tr>     
-                            <td>수요일</td>
-                            <td>등</td>
-                            <td>높음</td>
-                            <td>데드리프트</td>         
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">식단 가이드</h2>
-            <div class="grid">     
-                <div class="card">
-                    <h3>아침</h3>
-                    <p>닭가슴살 + 오트밀 + 계란</p>
-                </div>        
-                <div class="card">
-                    <h3>점심</h3>
-                    <p>일반식 + 단백질 보충</p>
-                </div>            
-                <div class="card">
-                    <h3>저녁</h3>
-                    <p>탄수화물 조절 + 고단백</p>
-                </div>
-            </div>
-        </section>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>스미스 머신 벤치프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>인클라인 덤벨프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>머신 체스트프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 플라이 (로우)</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 푸시다운</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>오버헤드 익스텐션</div></div>
+        </div>
+      </div>
+      <!-- 화 -->
+      <div class="day-card">
+        <div class="day-header">
+          <span>화</span><span class="day-badge">PULL A</span>
+        </div>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>시티드 케이블 로우</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>랫풀다운 (와이드)</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>어시스트 풀업</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>페이스풀</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>덤벨 바벨 컬</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>해머 컬</div></div>
+        </div>
+      </div>
+      <!-- 수 -->
+      <div class="day-card">
+        <div class="day-header">
+          <span>수</span><span class="day-badge">LEGS A</span>
+        </div>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>스미스 머신 스쿼트</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>레그프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>레그 익스텐션</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>루마니안 데드리프트</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>레그컬 (라잉)</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>힙쓰러스트</div></div>
+        </div>
+      </div>
+      <!-- 목 -->
+      <div class="day-card">
+        <div class="day-header">
+          <span>목</span><span class="day-badge">PUSH B</span>
+        </div>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>머신 숄더프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>덤벨 레터럴레이즈</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 레터럴레이즈</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>인클라인 덤벨프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 크로스오버</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>딥스 (어시스트)</div></div>
+        </div>
+      </div>
+      <!-- 금 -->
+      <div class="day-card">
+        <div class="day-header">
+          <span>금</span><span class="day-badge">PULL B</span>
+        </div>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>랫풀다운 (언더그립)</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>덤벨 원암 로우</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 스트레이트암</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>리어델트 머신</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>인클라인 덤벨 컬</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 컬</div></div>
+        </div>
+      </div>
+      <!-- 토 -->
+      <div class="day-card">
+        <div class="day-header rest-day">
+          <span>토</span><span class="day-badge" style="background:rgba(255,255,255,0.05);color:#555">REST</span>
+        </div>
+        <div class="day-body" style="color:#555">
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>아침 3km 구보</div></div>
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>스트레칭 20분</div></div>
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>폼롤러 마사지</div></div>
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>수분 섭취 집중</div></div>
+        </div>
+      </div>
+      <!-- 일 -->
+      <div class="day-card">
+        <div class="day-header rest-day">
+          <span>일</span><span class="day-badge" style="background:rgba(255,255,255,0.05);color:#555">REST</span>
+        </div>
+        <div class="day-body" style="color:#555">
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>완전 휴식 권장</div></div>
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>가벼운 산책</div></div>
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>다음 주 계획 점검</div></div>
+        </div>
+      </div>
     </div>
 
-    <footer class="footer">
-        Created by 상현 PT
-    </footer>
-</div>
+    <!-- 세부 운동표 Push A -->
+    <div class="section-tag" style="margin-bottom:0.6rem">Push A — 월요일 세부 루틴</div>
+    <div class="ex-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>운동</th><th>세트</th><th>반복</th><th>휴식</th><th>RPE</th><th>초급자 포인트</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="highlight-a">1</td><td>스미스 머신 벤치프레스</td><td>3</td><td>10-12</td><td>90초</td><td class="accent-a">6-7</td><td>바벨 대신 스미스로 폼 먼저. 궤도 고정으로 안전</td></tr>
+          <tr><td class="highlight-a">2</td><td>인클라인 덤벨프레스</td><td>3</td><td>12</td><td>90초</td><td class="accent-a">6-7</td><td>30°각도. 양손 동시에 내리며 가슴 스트레치 느끼기</td></tr>
+          <tr><td class="highlight-a">3</td><td>머신 체스트프레스</td><td>3</td><td>12-15</td><td>60초</td><td class="accent-a">7</td><td>폼 익히기 최적. 고립 감각 훈련에 집중</td></tr>
+          <tr><td class="highlight-a">4</td><td>케이블 플라이 (로우)</td><td>3</td><td>15</td><td>60초</td><td class="accent-a">7</td><td>가슴 내측 수축 느끼기. 가슴을 쥐어짜는 느낌</td></tr>
+          <tr><td class="highlight-a">5</td><td>케이블 트라이셉스 푸시다운</td><td>3</td><td>12-15</td><td>60초</td><td class="accent-a">7</td><td>팔꿈치 고정. 삼두 완전 수축까지</td></tr>
+          <tr><td class="highlight-a">6</td><td>오버헤드 트라이셉스 익스텐션</td><td>2</td><td>12</td><td>60초</td><td class="accent-a">6-7</td><td>삼두 장두 스트레치. 초급자는 케이블 버전 권장</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-tag" style="margin-bottom:0.6rem">Pull A — 화요일 세부 루틴</div>
+    <div class="ex-table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>운동</th><th>세트</th><th>반복</th><th>휴식</th><th>RPE</th><th>초급자 포인트</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="highlight-a">1</td><td>시티드 케이블 로우</td><td>3</td><td>10-12</td><td>90초</td><td class="accent-a">6-7</td><td>등 수축 느끼기. 팔이 아닌 등으로 당기는 감각 훈련</td></tr>
+          <tr><td class="highlight-a">2</td><td>랫풀다운 (와이드그립)</td><td>3</td><td>12</td><td>90초</td><td class="accent-a">7</td><td>광배근 하강 느끼기. 목 뒤로 당기지 말 것</td></tr>
+          <tr><td class="highlight-a">3</td><td>어시스트 풀업</td><td>3</td><td>8-10</td><td>90초</td><td class="accent-a">7</td><td>보조 줄여가며 점진. 완전 하강이 핵심</td></tr>
+          <tr><td class="highlight-a">4</td><td>페이스풀 (케이블)</td><td>3</td><td>15</td><td>60초</td><td class="accent-a">6-7</td><td>어깨 건강 필수. 외회전 의식하며 천천히</td></tr>
+          <tr><td class="highlight-a">5</td><td>덤벨 바벨 컬</td><td>3</td><td>12</td><td>60초</td><td class="accent-a">7</td><td>반동 없이 천천히. 이두 완전 수축 후 내리기</td></tr>
+          <tr><td class="highlight-a">6</td><td>해머 컬</td><td>2</td><td>12-15</td><td>60초</td><td class="accent-a">7</td><td>상완근+이두 장두. 전완 두께에도 기여</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-tag" style="margin-bottom:0.6rem">Legs A — 수요일 세부 루틴</div>
+    <div class="ex-table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>운동</th><th>세트</th><th>반복</th><th>휴식</th><th>RPE</th><th>초급자 포인트</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="highlight-a">1</td><td>스미스 머신 스쿼트</td><td>4</td><td>10-12</td><td>2분</td><td class="accent-a">6-7</td><td>자유 바벨 전 스미스로 자세 교정. 무릎이 발끝 넘지 않게</td></tr>
+          <tr><td class="highlight-a">2</td><td>레그프레스</td><td>3</td><td>12-15</td><td>90초</td><td class="accent-a">7</td><td>스쿼트 후 대퇴사두 누적 자극. 발 위치로 타겟 조절</td></tr>
+          <tr><td class="highlight-a">3</td><td>레그 익스텐션</td><td>3</td><td>15</td><td>60초</td><td class="accent-a">7</td><td>대퇴사두 고립. 무릎 완전 신전까지. 무게보다 수축 집중</td></tr>
+          <tr><td class="highlight-a">4</td><td>루마니안 데드리프트</td><td>3</td><td>10-12</td><td>90초</td><td class="accent-a">6-7</td><td>햄스트링 스트레치 핵심. 등 굽히지 말 것. 덤벨로 시작</td></tr>
+          <tr><td class="highlight-a">5</td><td>라잉 레그컬</td><td>3</td><td>12-15</td><td>60초</td><td class="accent-a">7</td><td>RDL과 이중 자극. 슬굴곡근 피크 수축 의식</td></tr>
+          <tr><td class="highlight-a">6</td><td>힙쓰러스트 (스미스)</td><td>3</td><td>12-15</td><td>90초</td><td class="accent-a">7</td><td>둔근 독립 발달. 엉덩이 최상단에서 1초 멈추기</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert-box">
+      💡 <strong>초급자 중량 증가 원칙</strong> — "2-for-2 룰": 마지막 세트에서 목표 반복 수를 2회 이상 초과하면 다음 세션에 2.5kg 증량.
+      서두르지 말고 이 원칙만 지켜도 6개월 안에 드라마틱한 변화가 만들어집니다.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 식단 -->
+  <div class="section">
+    <div class="section-tag">03 · 식단 설계</div>
+    <h2 class="section-title">하루 2,650 kcal 식단</h2>
+    <p style="color:var(--gray);font-size:0.85rem;margin-bottom:2rem;line-height:1.8">
+      목표: 단백질 190g / 탄수화물 270g / 지방 75g · 한국에서 구하기 쉬운 식재료만 사용
+    </p>
+
+    <div class="meal-grid">
+      <!-- 아침 -->
+      <div class="meal-card">
+        <div class="meal-header"><span>🌅 아침 (7시, 구보 후)</span><span class="meal-kcal">773 kcal</span></div>
+        <div class="meal-body">
+          <div class="meal-item"><span class="meal-item-name">현미밥</span><span class="meal-item-val">200g</span></div>
+          <div class="meal-item"><span class="meal-item-name">삶은 계란</span><span class="meal-item-val">3개</span></div>
+          <div class="meal-item"><span class="meal-item-name">삶은 닭가슴살</span><span class="meal-item-val">120g</span></div>
+          <div class="meal-item"><span class="meal-item-name">그릭요거트</span><span class="meal-item-val">100g</span></div>
+          <div class="meal-item"><span class="meal-item-name">바나나</span><span class="meal-item-val">1개</span></div>
+          <div class="macro-bar">
+            <span class="macro-chip chip-carb">탄 92g</span>
+            <span class="macro-chip chip-prot">단 61g</span>
+            <span class="macro-chip chip-fat">지 17g</span>
+          </div>
+        </div>
+      </div>
+      <!-- 점심 -->
+      <div class="meal-card">
+        <div class="meal-header"><span>☀️ 점심 (12시)</span><span class="meal-kcal">702 kcal</span></div>
+        <div class="meal-body">
+          <div class="meal-item"><span class="meal-item-name">백미밥</span><span class="meal-item-val">200g</span></div>
+          <div class="meal-item"><span class="meal-item-name">소고기 우둔살 구이</span><span class="meal-item-val">150g</span></div>
+          <div class="meal-item"><span class="meal-item-name">구운 두부</span><span class="meal-item-val">100g</span></div>
+          <div class="meal-item"><span class="meal-item-name">삶은 브로콜리</span><span class="meal-item-val">150g</span></div>
+          <div class="meal-item"><span class="meal-item-name">참기름</span><span class="meal-item-val">5g</span></div>
+          <div class="macro-bar">
+            <span class="macro-chip chip-carb">탄 69g</span>
+            <span class="macro-chip chip-prot">단 46g</span>
+            <span class="macro-chip chip-fat">지 28g</span>
+          </div>
+        </div>
+      </div>
+      <!-- 쉐이크 -->
+      <div class="meal-card">
+        <div class="meal-header"><span>💪 운동 후 쉐이크</span><span class="meal-kcal">266 kcal</span></div>
+        <div class="meal-body">
+          <div class="meal-item"><span class="meal-item-name">웨이 프로틴</span><span class="meal-item-val">1스쿱 (30g)</span></div>
+          <div class="meal-item"><span class="meal-item-name">저지방 우유</span><span class="meal-item-val">200ml</span></div>
+          <div class="meal-item"><span class="meal-item-name">바나나 (소)</span><span class="meal-item-val">1/2개</span></div>
+          <div class="macro-bar">
+            <span class="macro-chip chip-carb">탄 27g</span>
+            <span class="macro-chip chip-prot">단 31g</span>
+            <span class="macro-chip chip-fat">지 4g</span>
+          </div>
+        </div>
+      </div>
+      <!-- 저녁 -->
+      <div class="meal-card">
+        <div class="meal-header"><span>🌙 저녁 (18:30)</span><span class="meal-kcal">610 kcal</span></div>
+        <div class="meal-body">
+          <div class="meal-item"><span class="meal-item-name">쪄서 만든 고구마</span><span class="meal-item-val">150g</span></div>
+          <div class="meal-item"><span class="meal-item-name">연어 구이</span><span class="meal-item-val">150g</span></div>
+          <div class="meal-item"><span class="meal-item-name">스크램블 계란</span><span class="meal-item-val">2개</span></div>
+          <div class="meal-item"><span class="meal-item-name">오이·토마토 샐러드</span><span class="meal-item-val">200g</span></div>
+          <div class="macro-bar">
+            <span class="macro-chip chip-carb">탄 43g</span>
+            <span class="macro-chip chip-prot">단 45g</span>
+            <span class="macro-chip chip-fat">지 28g</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert-box">
+      📊 <strong>하루 합계</strong>: 약 2,550 kcal · 단백질 183g · 탄수화물 231g · 지방 77g
+      &nbsp;|&nbsp; 운동일은 밥 50g 추가 (+65kcal). 휴식일은 2,400kcal로 줄이기.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 보충제 -->
+  <div class="section">
+    <div class="section-tag">04 · 보충제</div>
+    <h2 class="section-title">효율 순서대로</h2>
+    <div class="supp-list">
+      <div class="supp-item">
+        <div class="supp-rank">1</div>
+        <div>
+          <div class="supp-name">웨이 프로틴</div>
+          <div class="supp-desc">단백질 목표(190g) 달성을 위한 필수 수단. 식사만으로는 현실적으로 어렵다. 운동 직후 30분 이내 섭취 시 근단백질 합성 극대화.</div>
+        </div>
+        <div class="supp-dose">30g / 운동 후</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">2</div>
+        <div>
+          <div class="supp-name">크레아틴 모노하이드레이트</div>
+          <div class="supp-desc">200건 이상 RCT에서 근력 5~15%, 근비대 유의미 증가 입증. 리컴프 시에도 체지방 감량에 지장 없음. 수분 저류로 초반 0.5~1kg 체중 증가는 정상.</div>
+        </div>
+        <div class="supp-dose">5g / 매일</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">3</div>
+        <div>
+          <div class="supp-name">카페인</div>
+          <div class="supp-desc">운동 퍼포먼스 향상, 지방 산화 촉진. 초급자는 100mg부터 시작. 주 3~4회만 사용해 내성 방지. 오후 5시 이후 복용 금지(수면 방해).</div>
+        </div>
+        <div class="supp-dose">100~150mg / 운동 전 30분</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">4</div>
+        <div>
+          <div class="supp-name">오메가3</div>
+          <div class="supp-desc">염증 감소, 회복 촉진, 인슐린 감수성 향상. EPA+DHA 합산 2g 이상 섭취해야 효과. 식사와 함께 복용 시 흡수율 UP.</div>
+        </div>
+        <div class="supp-dose">EPA+DHA 2g / 식사와 함께</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">5</div>
+        <div>
+          <div class="supp-name">종합비타민</div>
+          <div class="supp-desc">칼로리 제한 식단에서 부족하기 쉬운 아연, 비타민D, B군 보충. 식후 복용으로 소화 부담 감소.</div>
+        </div>
+        <div class="supp-dose">1정 / 아침 식후</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">6</div>
+        <div>
+          <div class="supp-name">마그네슘</div>
+          <div class="supp-desc">수면 질 향상, 근육 이완, 회복 촉진. 운동량이 많으면 마그네슘 소모 증가. 취침 1시간 전 복용이 가장 효과적.</div>
+        </div>
+        <div class="supp-dose">200~300mg / 취침 전</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 한 달 플랜 -->
+  <div class="section">
+    <div class="section-tag">05 · 한 달 집중 플랜</div>
+    <h2 class="section-title">4주 로드맵</h2>
+    <div class="monthly-grid">
+      <div class="month-card">
+        <div class="month-week">1주차</div>
+        <div class="month-row"><span class="month-key">체중 변화</span><span class="month-val">-0.5~-0.8kg</span></div>
+        <div class="month-row"><span class="month-key">체지방</span><span class="month-val">-0.5kg</span></div>
+        <div class="month-row"><span class="month-key">근육량</span><span class="month-val">+0.1kg</span></div>
+        <div class="month-row"><span class="month-key">RPE 목표</span><span class="month-val">6~7</span></div>
+        <div class="month-row"><span class="month-key">칼로리</span><span class="month-val">2,650 kcal</span></div>
+        <div class="month-row"><span class="month-key">집중 포인트</span><span class="month-val">폼 습득</span></div>
+      </div>
+      <div class="month-card">
+        <div class="month-week">2주차</div>
+        <div class="month-row"><span class="month-key">체중 변화</span><span class="month-val">-0.5~-0.7kg</span></div>
+        <div class="month-row"><span class="month-key">체지방</span><span class="month-val">-0.5kg</span></div>
+        <div class="month-row"><span class="month-key">근육량</span><span class="month-val">+0.2kg</span></div>
+        <div class="month-row"><span class="month-key">RPE 목표</span><span class="month-val">7~7.5</span></div>
+        <div class="month-row"><span class="month-key">칼로리</span><span class="month-val">2,650 kcal</span></div>
+        <div class="month-row"><span class="month-key">집중 포인트</span><span class="month-val">첫 증량 시도</span></div>
+      </div>
+      <div class="month-card">
+        <div class="month-week">3주차</div>
+        <div class="month-row"><span class="month-key">체중 변화</span><span class="month-val">-0.5kg</span></div>
+        <div class="month-row"><span class="month-key">체지방</span><span class="month-val">-0.4~-0.5kg</span></div>
+        <div class="month-row"><span class="month-key">근육량</span><span class="month-val">+0.3kg</span></div>
+        <div class="month-row"><span class="month-key">RPE 목표</span><span class="month-val">7.5~8</span></div>
+        <div class="month-row"><span class="month-key">칼로리</span><span class="month-val">2,500 kcal</span></div>
+        <div class="month-row"><span class="month-key">집중 포인트</span><span class="month-val">볼륨 극대화</span></div>
+      </div>
+      <div class="month-card">
+        <div class="month-week">4주차</div>
+        <div class="month-row"><span class="month-key">체중 변화</span><span class="month-val">-0.3~-0.5kg</span></div>
+        <div class="month-row"><span class="month-key">체지방</span><span class="month-val">-0.3~-0.4kg</span></div>
+        <div class="month-row"><span class="month-key">근육량</span><span class="month-val">+0.2kg</span></div>
+        <div class="month-row"><span class="month-key">RPE 목표</span><span class="month-val">7.5~8</span></div>
+        <div class="month-row"><span class="month-key">칼로리</span><span class="month-val">2,500 kcal</span></div>
+        <div class="month-row"><span class="month-key">집중 포인트</span><span class="month-val">컨디션 점검</span></div>
+      </div>
+    </div>
+    <div class="alert-box">
+      🎯 <strong>1개월 총 예상 변화</strong>: 체중 <strong>-2~-3kg</strong> · 체지방 <strong>-1.7~-2.2kg</strong> · 근육 <strong>+0.8~1kg</strong>
+      <br>초급자는 신경 적응 효과로 1~2주 차에도 급격한 근력 향상이 나타납니다. 이것은 근육이 느는 게 아니라 신경계 효율이 올라가는 정상적인 과정입니다.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 정체기 -->
+  <div class="section">
+    <div class="section-tag">06 · 정체기 대응</div>
+    <h2 class="section-title">막혔을 때 이렇게</h2>
+    <div class="plateau-grid">
+      <div class="plateau-card">
+        <div class="plateau-q">⚖️ 체중이 안 빠질 때</div>
+        <div class="plateau-a">① 식단 기록 앱(마이피트니스팔)으로 실제 칼로리 재점검<br>② 칼로리 150kcal 추가 감량<br>③ 주 1회 고강도 인터벌(HIIT) 20분 추가<br>④ 소금·나트륨 섭취 확인 (수분 저류 원인)</div>
+      </div>
+      <div class="plateau-card">
+        <div class="plateau-q">💪 근육이 안 늘 때</div>
+        <div class="plateau-a">① 단백질 하루 20g 추가<br>② 세트 수 1~2세트 증가<br>③ 수면 7시간 이상 확보 확인<br>④ 2주 볼륨 유지 후 재평가</div>
+      </div>
+      <div class="plateau-card">
+        <div class="plateau-q">🏋️ 벤치가 안 오를 때</div>
+        <div class="plateau-a">① 클로즈그립 벤치로 삼두 강화<br>② 같은 무게 세트 수 추가 (볼륨 증가)<br>③ 초급자라면 폼 재점검 (견갑 고정, 아치)<br>④ 1~2주 중량 유지 후 재시도</div>
+      </div>
+      <div class="plateau-card">
+        <div class="plateau-q">🦵 스쿼트가 정체될 때</div>
+        <div class="plateau-a">① 레그프레스 볼륨 2주 집중 증가<br>② 박스 스쿼트로 하강 제어 강화<br>③ 고반복(15~20회) 경량 주간 삽입<br>④ 고관절·발목 유연성 점검</div>
+      </div>
+      <div class="plateau-card">
+        <div class="plateau-q">😴 피로가 누적될 때</div>
+        <div class="plateau-a">① 즉시 1주 디로드 (세트 수 40~50% 감량, 중량 60~70%)<br>② 탄수화물 하루 100g 추가<br>③ 마그네슘 취침 전 복용 확인<br>④ 수면 루틴 재정비</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /panel-a -->
+
+
+<!-- ══════════════════════════════════════════
+     PANEL B
+══════════════════════════════════════════ -->
+<div id="panel-b" class="panel panel-b">
+
+  <!-- 신체 분석 -->
+  <div class="section">
+    <div class="section-tag">01 · 신체 분석</div>
+    <h2 class="section-title">B의 현재 상태</h2>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">BMI</div>
+        <div class="stat-value">20.5</div>
+        <div class="stat-unit">정상, 저근육형</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">예상 체지방률</div>
+        <div class="stat-value">15%</div>
+        <div class="stat-unit">약 8.7kg 체지방</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">제지방 체중 LBM</div>
+        <div class="stat-value">49kg</div>
+        <div class="stat-unit">근육+골격+수분</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">FFMI</div>
+        <div class="stat-value">17.4</div>
+        <div class="stat-unit">자연 한계 대비 발전 여지 매우 큼</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">TDEE (유지 칼로리)</div>
+        <div class="stat-value">2,340</div>
+        <div class="stat-unit">kcal / 일</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">목표 칼로리 (운동일)</div>
+        <div class="stat-value">2,500</div>
+        <div class="stat-unit">kcal / +160 잉여</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">단백질 목표</div>
+        <div class="stat-value">150g</div>
+        <div class="stat-unit">LBM × 3.0g</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">1개월 목표 체중</div>
+        <div class="stat-value">60kg</div>
+        <div class="stat-unit">근육 +1~1.5kg / 지방 +0.3kg</div>
+      </div>
+    </div>
+
+    <div class="alert-box">
+      ⚠️ <strong>초급자 핵심 원칙 (B)</strong> — 저체중에 가까운 체형이라 벌크업이 절실하지만, 과도한 칼로리 잉여는 지방으로 축적됩니다.
+      <strong>하루 150~200kcal 잉여</strong>를 유지하는 클린벌크가 가장 효율적입니다.
+      처음 4~6주는 폼 습득에 집중하고, RPE 7.5를 절대 넘기지 마세요.
+      아침 구보는 인슐린 감수성을 높여 영양소 흡수를 최적화하는 역할을 합니다.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 주간 스케줄 B -->
+  <div class="section">
+    <div class="section-tag">02 · 주간 운동 루틴</div>
+    <h2 class="section-title">요일별 전략 (초급자 PPL)</h2>
+
+    <div class="week-schedule">
+      <div class="day-card">
+        <div class="day-header"><span>월</span><span class="day-badge">PUSH A</span></div>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>스미스 머신 벤치프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>인클라인 덤벨프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>머신 체스트프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 플라이</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 푸시다운</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>오버헤드 익스텐션</div></div>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header"><span>화</span><span class="day-badge">PULL A</span></div>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>시티드 케이블 로우</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>랫풀다운 (와이드)</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>어시스트 풀업</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>페이스풀</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>바벨 컬</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>해머 컬</div></div>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header"><span>수</span><span class="day-badge">LEGS A</span></div>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>스미스 머신 스쿼트</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>레그프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>레그 익스텐션</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>루마니안 데드리프트</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>라잉 레그컬</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>카프레이즈</div></div>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header"><span>목</span><span class="day-badge">PUSH B</span></div>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>머신 숄더프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>덤벨 레터럴레이즈</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 레터럴레이즈</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>인클라인 덤벨프레스</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 크로스오버</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>딥스 (어시스트)</div></div>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header"><span>금</span><span class="day-badge">PULL B</span></div>
+        <div class="day-body">
+          <div class="exercise-item"><div class="ex-dot"></div><div>랫풀다운 (언더그립)</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>덤벨 원암 로우</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 스트레이트암</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>리어델트 머신</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>인클라인 덤벨 컬</div></div>
+          <div class="exercise-item"><div class="ex-dot"></div><div>케이블 컬</div></div>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header rest-day"><span>토</span><span class="day-badge" style="background:rgba(255,255,255,0.05);color:#555">REST</span></div>
+        <div class="day-body" style="color:#555">
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>아침 3km 구보</div></div>
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>스트레칭 20분</div></div>
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>충분한 영양 보충</div></div>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-header rest-day"><span>일</span><span class="day-badge" style="background:rgba(255,255,255,0.05);color:#555">REST</span></div>
+        <div class="day-body" style="color:#555">
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>완전 휴식</div></div>
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>고탄수화물 식사</div></div>
+          <div class="exercise-item"><div class="ex-dot" style="background:#333"></div><div>글리코겐 재충전</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 운동표 B -->
+    <div class="section-tag" style="margin-bottom:0.6rem">Push A — 월요일 세부 루틴</div>
+    <div class="ex-table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>운동</th><th>세트</th><th>반복</th><th>휴식</th><th>RPE</th><th>초급자 포인트</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="highlight-b">1</td><td>스미스 머신 벤치프레스</td><td>4</td><td>10-12</td><td>90초</td><td class="accent-b">6-7</td><td>벌크업은 세트 수 1개 많게. 볼륨이 근비대의 핵심</td></tr>
+          <tr><td class="highlight-b">2</td><td>인클라인 덤벨프레스</td><td>3</td><td>10-12</td><td>90초</td><td class="accent-b">7</td><td>상부 가슴 발달. 상체 입체감의 핵심</td></tr>
+          <tr><td class="highlight-b">3</td><td>머신 체스트프레스</td><td>3</td><td>12-15</td><td>60초</td><td class="accent-b">7</td><td>피로 후 안전하게 볼륨 추가</td></tr>
+          <tr><td class="highlight-b">4</td><td>케이블 플라이</td><td>3</td><td>15</td><td>60초</td><td class="accent-b">7</td><td>가슴 수축 감각 훈련. 마인드-머슬 커넥션</td></tr>
+          <tr><td class="highlight-b">5</td><td>케이블 트라이셉스 푸시다운</td><td>3</td><td>12-15</td><td>60초</td><td class="accent-b">7</td><td>삼두 발달로 팔 둘레 증가</td></tr>
+          <tr><td class="highlight-b">6</td><td>오버헤드 트라이셉스 익스텐션</td><td>3</td><td>12</td><td>60초</td><td class="accent-b">7</td><td>삼두 장두 스트레치. 팔 전체 두께 발달</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-tag" style="margin-bottom:0.6rem">Legs A — 수요일 세부 루틴 (B 특이사항)</div>
+    <div class="ex-table-wrap">
+      <table>
+        <thead>
+          <tr><th>#</th><th>운동</th><th>세트</th><th>반복</th><th>휴식</th><th>RPE</th><th>B 특이사항</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="highlight-b">1</td><td>스미스 머신 스쿼트</td><td>4</td><td>10-12</td><td>2분</td><td class="accent-b">6-7</td><td>하체 볼륨이 성장호르몬 분비 촉진. 벌크업 가속</td></tr>
+          <tr><td class="highlight-b">2</td><td>레그프레스</td><td>4</td><td>12-15</td><td>90초</td><td class="accent-b">7</td><td>A보다 1세트 더. 근육량 증가 최우선</td></tr>
+          <tr><td class="highlight-b">3</td><td>레그 익스텐션</td><td>3</td><td>15</td><td>60초</td><td class="accent-b">7</td><td>대퇴사두 마무리 고립</td></tr>
+          <tr><td class="highlight-b">4</td><td>루마니안 데드리프트</td><td>4</td><td>10-12</td><td>90초</td><td class="accent-b">7</td><td>햄스트링 발달로 하체 균형감. A보다 1세트 더</td></tr>
+          <tr><td class="highlight-b">5</td><td>라잉 레그컬</td><td>3</td><td>12-15</td><td>60초</td><td class="accent-b">7</td><td>RDL 보완. 햄스트링 이중 자극</td></tr>
+          <tr><td class="highlight-b">6</td><td>스탠딩 카프레이즈</td><td>4</td><td>15-20</td><td>60초</td><td class="accent-b">7-8</td><td>종아리 발달. 하체 완성도. 힙쓰러스트 대신 카프 집중</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="alert-box">
+      💡 <strong>B의 초급자 증량 원칙</strong> — 스미스 머신에서 완벽한 폼을 익힌 후 4~6주 뒤부터 프리바벨로 전환.
+      벌크업의 핵심은 점진적 과부하(Progressive Overload)입니다. 매 세션 조금씩이라도 더 하는 것이 목표.
+      <strong>주 1회 체중 측정</strong>으로 증량 속도 모니터링. 한 달에 1~2kg 이상 늘면 칼로리 소폭 줄이기.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 식단 B -->
+  <div class="section">
+    <div class="section-tag">03 · 식단 설계</div>
+    <h2 class="section-title">하루 2,500 kcal 식단</h2>
+    <p style="color:var(--gray);font-size:0.85rem;margin-bottom:2rem;line-height:1.8">
+      목표: 단백질 150g / 탄수화물 305g / 지방 65g · 탄수화물 우선 설계로 운동 퍼포먼스 극대화
+    </p>
+
+    <div class="meal-grid">
+      <div class="meal-card">
+        <div class="meal-header"><span>🌅 아침 (7시, 구보 후)</span><span class="meal-kcal">669 kcal</span></div>
+        <div class="meal-body">
+          <div class="meal-item"><span class="meal-item-name">오트밀 (건조)</span><span class="meal-item-val">80g</span></div>
+          <div class="meal-item"><span class="meal-item-name">삶은 계란</span><span class="meal-item-val">3개</span></div>
+          <div class="meal-item"><span class="meal-item-name">바나나</span><span class="meal-item-val">1개</span></div>
+          <div class="meal-item"><span class="meal-item-name">그릭요거트</span><span class="meal-item-val">100g</span></div>
+          <div class="macro-bar">
+            <span class="macro-chip chip-carb">탄 88g</span>
+            <span class="macro-chip chip-prot">단 39g</span>
+            <span class="macro-chip chip-fat">지 19g</span>
+          </div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-header"><span>☀️ 점심 (12시)</span><span class="meal-kcal">666 kcal</span></div>
+        <div class="meal-body">
+          <div class="meal-item"><span class="meal-item-name">백미밥</span><span class="meal-item-val">250g</span></div>
+          <div class="meal-item"><span class="meal-item-name">삶은 닭가슴살</span><span class="meal-item-val">150g</span></div>
+          <div class="meal-item"><span class="meal-item-name">구운 두부</span><span class="meal-item-val">100g</span></div>
+          <div class="meal-item"><span class="meal-item-name">채소볶음 (식용유)</span><span class="meal-item-val">150g</span></div>
+          <div class="macro-bar">
+            <span class="macro-chip chip-carb">탄 84g</span>
+            <span class="macro-chip chip-prot">단 49g</span>
+            <span class="macro-chip chip-fat">지 13g</span>
+          </div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-header"><span>💪 운동 후 쉐이크</span><span class="meal-kcal">343 kcal</span></div>
+        <div class="meal-body">
+          <div class="meal-item"><span class="meal-item-name">웨이 프로틴</span><span class="meal-item-val">1.5스쿱 (45g)</span></div>
+          <div class="meal-item"><span class="meal-item-name">일반 우유</span><span class="meal-item-val">250ml</span></div>
+          <div class="meal-item"><span class="meal-item-name">바나나</span><span class="meal-item-val">1/2개</span></div>
+          <div class="macro-bar">
+            <span class="macro-chip chip-carb">탄 21g</span>
+            <span class="macro-chip chip-prot">단 46g</span>
+            <span class="macro-chip chip-fat">지 12g</span>
+          </div>
+        </div>
+      </div>
+      <div class="meal-card">
+        <div class="meal-header"><span>🌙 저녁 (18:30)</span><span class="meal-kcal">686 kcal</span></div>
+        <div class="meal-body">
+          <div class="meal-item"><span class="meal-item-name">현미밥</span><span class="meal-item-val">200g</span></div>
+          <div class="meal-item"><span class="meal-item-name">소고기 우둔살</span><span class="meal-item-val">120g</span></div>
+          <div class="meal-item"><span class="meal-item-name">물참치캔</span><span class="meal-item-val">100g</span></div>
+          <div class="meal-item"><span class="meal-item-name">고구마</span><span class="meal-item-val">100g</span></div>
+          <div class="macro-bar">
+            <span class="macro-chip chip-carb">탄 81g</span>
+            <span class="macro-chip chip-prot">단 52g</span>
+            <span class="macro-chip chip-fat">지 16g</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert-box">
+      📊 <strong>하루 합계</strong>: 약 2,364 kcal (휴식일 기준) · 단백질 186g · 탄수화물 274g · 지방 60g
+      <br>운동일에는 <strong>밥 50g + 오트밀 20g 추가</strong> → 약 2,500 kcal. 클린벌크의 핵심은 꾸준한 칼로리 잉여 유지입니다.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 보충제 B -->
+  <div class="section">
+    <div class="section-tag">04 · 보충제</div>
+    <h2 class="section-title">효율 순서대로</h2>
+    <div class="supp-list">
+      <div class="supp-item">
+        <div class="supp-rank">1</div>
+        <div>
+          <div class="supp-name">웨이 프로틴</div>
+          <div class="supp-desc">벌크업 성공의 첫 번째 조건은 단백질 목표 달성. 1.5스쿱으로 운동 직후 빠른 아미노산 공급. 카제인 혼합 제품이면 야간 근합성에도 도움.</div>
+        </div>
+        <div class="supp-dose">45g / 운동 후</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">2</div>
+        <div>
+          <div class="supp-name">크레아틴 모노하이드레이트</div>
+          <div class="supp-desc">벌크업에서 가장 가성비 좋은 보충제. 세포 내 수분 증가로 근육 볼륨 증가, ATP 재합성 가속으로 고볼륨 훈련 지속 가능. 로딩 없이 5g 매일 유지.</div>
+        </div>
+        <div class="supp-dose">5g / 매일 (아무 때나)</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">3</div>
+        <div>
+          <div class="supp-name">카페인</div>
+          <div class="supp-desc">훈련 집중력과 퍼포먼스 향상. 벌크업 중 고볼륨 훈련의 퀄리티를 유지하는 데 필수적. 200mg까지 점진적으로 증가. 주 4회 이하로 제한.</div>
+        </div>
+        <div class="supp-dose">150~200mg / 운동 전 30분</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">4</div>
+        <div>
+          <div class="supp-name">오메가3</div>
+          <div class="supp-desc">고볼륨 훈련으로 인한 염증 감소. 인슐린 감수성 향상으로 탄수화물의 근육 저장 효율을 높임. 벌크업 중 지방 질 관리.</div>
+        </div>
+        <div class="supp-dose">EPA+DHA 2g / 식사와 함께</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">5</div>
+        <div>
+          <div class="supp-name">종합비타민</div>
+          <div class="supp-desc">높은 칼로리 섭취에도 불구하고 미량영양소가 불균형해지기 쉬움. 아연은 테스토스테론 합성에, 비타민D는 근기능에 직접 관여.</div>
+        </div>
+        <div class="supp-dose">1정 / 아침 식후</div>
+      </div>
+      <div class="supp-item">
+        <div class="supp-rank">6</div>
+        <div>
+          <div class="supp-name">마그네슘</div>
+          <div class="supp-desc">고강도 훈련 시 마그네슘 소모 증가. 수면 중 성장호르몬 분비를 최적화. 근경련 방지 효과. 취침 전 복용이 핵심.</div>
+        </div>
+        <div class="supp-dose">200~400mg / 취침 전</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 한 달 플랜 B -->
+  <div class="section">
+    <div class="section-tag">05 · 한 달 집중 플랜</div>
+    <h2 class="section-title">4주 로드맵</h2>
+    <div class="monthly-grid">
+      <div class="month-card">
+        <div class="month-week">1주차</div>
+        <div class="month-row"><span class="month-key">체중 변화</span><span class="month-val">+0.3~+0.5kg</span></div>
+        <div class="month-row"><span class="month-key">체지방</span><span class="month-val">+0.05kg</span></div>
+        <div class="month-row"><span class="month-key">근육량</span><span class="month-val">+0.3~+0.4kg</span></div>
+        <div class="month-row"><span class="month-key">RPE 목표</span><span class="month-val">6~7</span></div>
+        <div class="month-row"><span class="month-key">칼로리</span><span class="month-val">2,500 kcal</span></div>
+        <div class="month-row"><span class="month-key">집중 포인트</span><span class="month-val">폼 확립</span></div>
+      </div>
+      <div class="month-card">
+        <div class="month-week">2주차</div>
+        <div class="month-row"><span class="month-key">체중 변화</span><span class="month-val">+0.4~+0.5kg</span></div>
+        <div class="month-row"><span class="month-key">체지방</span><span class="month-val">+0.1kg</span></div>
+        <div class="month-row"><span class="month-key">근육량</span><span class="month-val">+0.3~+0.4kg</span></div>
+        <div class="month-row"><span class="month-key">RPE 목표</span><span class="month-val">7~7.5</span></div>
+        <div class="month-row"><span class="month-key">칼로리</span><span class="month-val">2,500 kcal</span></div>
+        <div class="month-row"><span class="month-key">집중 포인트</span><span class="month-val">중량 첫 증가</span></div>
+      </div>
+      <div class="month-card">
+        <div class="month-week">3주차</div>
+        <div class="month-row"><span class="month-key">체중 변화</span><span class="month-val">+0.4kg</span></div>
+        <div class="month-row"><span class="month-key">체지방</span><span class="month-val">+0.1kg</span></div>
+        <div class="month-row"><span class="month-key">근육량</span><span class="month-val">+0.3kg</span></div>
+        <div class="month-row"><span class="month-key">RPE 목표</span><span class="month-val">7.5~8</span></div>
+        <div class="month-row"><span class="month-key">칼로리</span><span class="month-val">2,550 kcal</span></div>
+        <div class="month-row"><span class="month-key">집중 포인트</span><span class="month-val">볼륨 피크</span></div>
+      </div>
+      <div class="month-card">
+        <div class="month-week">4주차</div>
+        <div class="month-row"><span class="month-key">체중 변화</span><span class="month-val">+0.3~+0.4kg</span></div>
+        <div class="month-row"><span class="month-key">체지방</span><span class="month-val">+0.1kg</span></div>
+        <div class="month-row"><span class="month-key">근육량</span><span class="month-val">+0.2~+0.3kg</span></div>
+        <div class="month-row"><span class="month-key">RPE 목표</span><span class="month-val">7.5~8</span></div>
+        <div class="month-row"><span class="month-key">칼로리</span><span class="month-val">2,550 kcal</span></div>
+        <div class="month-row"><span class="month-key">집중 포인트</span><span class="month-val">2개월 준비</span></div>
+      </div>
+    </div>
+    <div class="alert-box">
+      🎯 <strong>1개월 총 예상 변화</strong>: 체중 <strong>+1.4~1.9kg</strong> · 체지방 <strong>+0.3~0.35kg</strong> · 근육 <strong>+1.1~1.5kg</strong>
+      <br>한 달에 늘어난 체중의 <strong>80% 이상이 근육</strong>인 게 클린벌크의 목표입니다. 체중이 한 달에 2kg 이상 늘면 칼로리를 100kcal 줄이세요.
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 정체기 B -->
+  <div class="section">
+    <div class="section-tag">06 · 정체기 대응</div>
+    <h2 class="section-title">막혔을 때 이렇게</h2>
+    <div class="plateau-grid">
+      <div class="plateau-card">
+        <div class="plateau-q">⚖️ 체중이 안 늘 때</div>
+        <div class="plateau-a">① 식단 기록으로 실제 칼로리 확인<br>② 탄수화물 100g 추가 (밥 1공기)<br>③ 취침 전 카제인 단백질 or 우유 1컵 추가<br>④ 유산소 강도·시간 소폭 감량</div>
+      </div>
+      <div class="plateau-card">
+        <div class="plateau-q">💪 근육이 안 늘 때</div>
+        <div class="plateau-a">① 단백질 20g 추가<br>② 세트 수 1~2세트 증가<br>③ 수면 7.5시간 이상 확보<br>④ 크레아틴 복용 여부 확인</div>
+      </div>
+      <div class="plateau-card">
+        <div class="plateau-q">🏋️ 벤치가 안 오를 때</div>
+        <div class="plateau-a">① 같은 중량으로 세트 수 먼저 추가<br>② 클로즈그립 벤치로 삼두 보강<br>③ 초급자는 볼륨 먼저, 강도 나중<br>④ 어깨 컨디션 점검</div>
+      </div>
+      <div class="plateau-card">
+        <div class="plateau-q">🦵 스쿼트가 정체될 때</div>
+        <div class="plateau-a">① 레그프레스 집중 2주<br>② 고반복(15~20회) 주간 삽입<br>③ 고관절·발목 유연성 운동<br>④ 체중 증가 속도 확인 (연료 부족?)</div>
+      </div>
+      <div class="plateau-card">
+        <div class="plateau-q">😴 피로가 누적될 때</div>
+        <div class="plateau-a">① 1주 디로드 (세트 수 50% 감량)<br>② 탄수화물 추가 (글리코겐 재충전)<br>③ 수면 8시간 목표<br>④ 유산소 해당 주에 완전 제거</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /panel-b -->
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>맞춤형 트레이닝 플랜 · 초급자 버전 · PPL 분할 · 주 5회</p>
+  <p style="margin-top:0.5rem"><span>⚠ 부상 또는 지병이 있는 경우 전문 의료진 및 트레이너와 상담 후 시작하세요</span></p>
+</footer>
 
 <script>
-    /* 비밀번호 및 만료일 설정 */
-    const PASSWORD = "PT2026"; // 원하는 비밀번호로 수정 가능
-    const EXPIRE_DATE = "2026-12-31"; // 원하는 만료일로 수정 가능
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const panels = { a: document.getElementById('panel-a'), b: document.getElementById('panel-b') };
 
-    function login(){
-        const now = new Date();
-        const expire = new Date(EXPIRE_DATE);
-        
-        if(now > expire){
-            document.body.innerHTML = `
-            <div style="min-height:100vh; display:flex; justify-content:center; align-items:center; text-align:center; padding:20px; font-size:1.5rem;">
-                페이지 이용 기간이 종료되었습니다.
-            </div>`;
-            return;
-        }
-        
-        const input = document.getElementById("passwordInput").value;
-        if(input === PASSWORD){
-            document.getElementById("loginScreen").style.display = "none";
-            document.getElementById("content").style.display = "block";
-        } else {
-            document.getElementById("error").innerText = "비밀번호가 올바르지 않습니다.";
-        }
-    }
-
-    /* 엔터 로그인 */
-    document.getElementById("passwordInput").addEventListener("keydown", function(e){
-        if(e.key === "Enter"){
-            login();
-        }
+  function showPanel(id) {
+    Object.entries(panels).forEach(([key, el]) => {
+      el.classList.toggle('active', key === id);
     });
-
-    /* 우클릭 차단 */
-    document.addEventListener("contextmenu", e => {
-        e.preventDefault();
+    tabBtns.forEach(btn => {
+      btn.classList.remove('active-a', 'active-b');
     });
-
-    /* 개발자도구 단축키 차단 */
-    document.addEventListener("keydown", function(e){
-        if(e.key === "F12"){
-            e.preventDefault();
-        }
-        if(e.ctrlKey && ["u","s","c"].includes(e.key.toLowerCase())){
-            e.preventDefault();
-        }
-    });
+    tabBtns[id === 'a' ? 0 : 1].classList.add(id === 'a' ? 'active-a' : 'active-b');
+    window.scrollTo({ top: document.querySelector('.tab-nav').offsetTop - 10, behavior: 'smooth' });
+  }
 </script>
+
 </body>
 </html>
